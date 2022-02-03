@@ -5,7 +5,9 @@ const userRoutes = require("./api/users/routes")
 const productsRoutes = require('./api/products/routes');
 const shopsRoutes = require('./api/shops/routes');
 const app = express();
-connectDb();
+const passport = require ("passport");
+const {localStartegy} = require ("./middleware/passport")
+
 
 app.use(cors());
 app.use(express.json());
@@ -17,6 +19,9 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(passport.initialize());
+passport.use(localStartegy);
+
 // Routes
 app.use("/api",userRoutes);
 app.use('/api/products', productsRoutes);
@@ -26,4 +31,5 @@ app.use((err, req, res, next) => {
     message: err.message || 'Internal Server Error',
   });
 });
+connectDb();
 app.listen(8000);

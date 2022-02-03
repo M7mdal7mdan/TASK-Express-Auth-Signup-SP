@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
+const passport = require("passport")
 const {
-     signUp
+     signUp,signIn
 } = require("./controllers")
 
 //param meddileware
@@ -11,6 +12,7 @@ const {
 
 // create user
 router.post("/signup", signUp);
+router.post("/signin",passport.authenticate("local",{session:false}), signIn);
 
 
 
