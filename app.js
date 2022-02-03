@@ -6,7 +6,8 @@ const productsRoutes = require('./api/products/routes');
 const shopsRoutes = require('./api/shops/routes');
 const app = express();
 const passport = require ("passport");
-const {localStartegy} = require ("./middleware/passport")
+const {localStartegy, jwtStrategy} = require ("./middleware/passport")
+
 
 
 app.use(cors());
@@ -21,6 +22,8 @@ app.use((req, res, next) => {
 
 app.use(passport.initialize());
 passport.use(localStartegy);
+passport.use(jwtStrategy);
+
 
 // Routes
 app.use("/api",userRoutes);
